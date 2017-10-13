@@ -55,3 +55,28 @@ class Actor {
     else return false;
   }
 }
+
+
+class Level {
+  constructor(grid = [], actors = []) {
+    this.grid = grid;
+    this.actors = actors;
+    this.player = this.actors.find(el => {
+      if (el.type === `player`) return true;
+      return false;
+    });
+    this.height = this.grid.length;
+    this.width = 0;
+    this.grid.forEach(line => {
+      if (line.length > this.width) this.width = line.length;
+    });
+    this.status = null;
+    this.finishDelay = 1;
+  }
+  
+  isFinished() {
+    if (this.status !== null && this.finishDelay < 0) 
+      return true;    
+    return false;
+  }
+}
