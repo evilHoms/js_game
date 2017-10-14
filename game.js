@@ -117,8 +117,6 @@ class Level {
         }
       }
     }*/
-      
-    return undefined;
   }
   
   removeActor(actor) {
@@ -145,7 +143,23 @@ class Level {
 }
 
 class LevelParser {
-  constructor(actorsMap) {
-    
+  constructor(actors) {
+    this.actors = actors;
+  }
+  
+  actorFromSymbol(actorSymbol) {
+    for (let key in this.actors) {
+      if (actorSymbol === key) 
+        return this.actors[key];
+    }
+  }
+  
+  obstacleFromSymbol(obstacleSymbol) {
+    switch (obstacleSymbol) {
+      case `x`:
+        return `wall`;
+      case `!`:
+        return `lava`;
+    }
   }
 }
