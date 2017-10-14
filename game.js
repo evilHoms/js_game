@@ -79,4 +79,73 @@ class Level {
       return true;    
     return false;
   }
+  
+  actorAt(actor) {
+    if (!(actor instanceof Actor) || !actor) throw new Error(`Wrong argument in actorAt method`);
+    
+    return this.actors.find(el => {
+      if (el.isIntersect(actor)) return true;
+      return false;
+    });
+  }
+    
+  obstacleAt(pos, size) {
+    if (!(pos instanceof Vector) || !(size instanceof Vector)) throw new Error(`Wrong argument in obstacleAt method`);
+    
+    // Как проверить, пересечение с препятсятвиями, если нет данных об этих препятствиях?
+    // Или препятствия так же передаются в массив this.actors?
+    
+    if (pos.x + size.x > this.width ||
+       pos.x < 0 ||
+       pos.y + size.y > this.height ||
+       pos.y < 0) {
+      if (pos.y + size.y > this.height) return `lava`;
+      return `wall`;
+    }
+    
+    /*for (let i = pos.y; i <= pos.y + size.y; i++) {
+      for (let j = pos.x; j <= pos.x + size.x; j++) {
+        switch (this.grid[i][j]) {
+          case `x`:
+            console.log(`wall`);
+            return `wall`;
+          case `!`:
+            console.log(`lawa`);
+            return `lawa`;
+          default:
+            console.log(`its ok`);
+        }
+      }
+    }*/
+      
+    return undefined;
+  }
+  
+  removeActor(actor) {
+    this.actors.splice(this.actors.indexOf(actor), 1);
+  }
+  
+  noMoreActors(type) {
+    if (!type) return this.actors.length > 0 ? false : true;
+    if (!this.actors.find(el => { if (el.type === type) return true; })) return true;
+    return false;
+  }
+  
+  playerTouched(obstractionType, actor) {
+    if (this.status === null) {
+      if (obstractionType === `lava` || obstractionType === `fireball`) this.status = `lost`;
+      
+      if (obstractionType === `coin` && actor.type === `coin`) {
+        this.removeActor(actor);
+        if (!this.actors.find(el => { if (el.type === `coin`) return true; else return false; }))
+          this.status = `won`;
+      }
+    }
+  }
+}
+
+class LevelParser {
+  constructor(actorsMap) {
+    
+  }
 }
