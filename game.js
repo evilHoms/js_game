@@ -203,4 +203,87 @@ class Fireball extends Actor {
   }
   
   get type() { return this._type; }
+  
+  getNextPosition(t = 1) {
+    return new Vector(this.pos.x + this.speed.x * t, this.pos.y + this.speed.y * t);
+  }
+  
+  handleObstacle() {
+    this.speed.x = -this.speed.x;
+    this.speed.y = -this.speed.y;
+  }
+  
+  act(t, level) {
+    const newPos = this.getNextPosition(t);
+    if (level.obstacleAt(newPos, this.size))
+      this.handleObstacle();
+    else
+      this.pos = newPos;
+  }
+}
+
+class HorizontalFireball extends Fireball {
+  constructor(pos = new Vector(0, 0)) {
+    super(pos, new Vector(2, 0));
+  }
+}
+
+class VerticalFireball extends Fireball {
+  constructor(pos = new Vector(0, 0)) {
+    super(pos, new Vector(0, 2));
+  }
+}
+
+class FireRain extends Fireball {
+  constructor(pos = new Vector(0, 0)) {
+    super(pos, new Vector(0, 3));
+    this.pos = pos;
+    this.startPos = pos;
+  }
+  
+  handleObstacle() {
+    this.pos.y = this.startPos.y;
+    this.pos.x = this.startPos.x;
+  }
+}
+
+class Coin extends Actor {
+  constructor(pos = new Vector(0, 0)) {
+    super(new Vector(0.2 + pos.x, 0.1 + pos.y), new Vector(0.6, 0.6));
+    this.basePos = new Vector(pos.x + 0.2, pos.y + 0.1);
+    this.springSpeed = 8;
+    this.springDist = 0.07;
+    this.spring = Math.random() * 2 * Math.PI;
+    
+    this._type = `coin`;
+  }
+  
+  get type() { return this._type; }
+  
+  updateSpring(t = 1) {
+    this.spring += t * this.springSpeed;
+  }
+  
+  getSpringVector() {
+    return new Vector(0, this.springDist * Math.sin(this.spring));
+  }
+  
+  getNextPosition(t = 1) {
+    this.updateSpring(t);
+    return new Vector(this.basePos.x, this.basePos.y + this.getSpringVector().y);
+  }
+  
+  act(t = 1) {
+    this.pos = this.getNextPosition(t);
+  }
+}
+
+class Player extends Actor {
+  constructor(pos = new Vector(0, 0)) {
+    super(new Vector(pos.x, pos.y - 0.5), new Vector(0.8, 1.5));
+    
+    this._type = `player`;
+  }
+  
+  get type() { return this._type; }
 }
