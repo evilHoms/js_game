@@ -149,7 +149,8 @@ class LevelParser {
   
   actorFromSymbol(actorSymbol) {
     for (let key in this.actors) {
-      if (actorSymbol === key) 
+      
+      if (actorSymbol === key)
         return this.actors[key];
     }
   }
@@ -162,4 +163,44 @@ class LevelParser {
         return `lava`;
     }
   }
+  
+  createGrid(stringsArray) {
+    return stringsArray.map(str => {
+      return str.split(``).map(char => {
+        return this.obstacleFromSymbol(char) === undefined ? undefined : this.obstacleFromSymbol(char);
+      });
+    });
+  }
+  
+  createActors(stringArray) {
+    const actorsArray = [];
+    
+    stringArray.forEach((str, Y) => {
+      str.split(``).forEach((char, X) => {
+        const constr = this.actorFromSymbol(char);
+        if (constr && (constr === Actor || Actor.prototype.isPrototypeOf(constr.prototype)))
+          actorsArray.push(new constr(new Vector(X, Y)));
+      });
+    });
+    
+    return actorsArray;
+  }
+  
+  parse(stringArray) {
+    const obstucles = this.createGrid(stringArray);
+    const actors = this.createActors(stringArray);
+
+    return new Level(obstucles, actors);
+  }
+}
+
+class Fireball extends Actor {
+  constructor(pos = new Vector(0, 0), speed = new Vector(0, 0)) {
+    super(pos, new Vector(1, 1), speed);
+    this.pos = pos;
+    this.speed = speed;
+    this._type = `fireball`;
+  }
+  
+  get type() { return this._type; }
 }
