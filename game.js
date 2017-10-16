@@ -93,7 +93,8 @@ class Level {
     
   obstacleAt(pos, size) {
     if (!(pos instanceof Vector) || !(size instanceof Vector)) throw new Error(`Wrong argument in obstacleAt method`);
-
+console.log(`player.pos`, pos.x, pos.y);
+    console.log(this.grid);
     if (pos.x + size.x > this.width ||
        pos.x < 0 ||
        pos.y + size.y > this.height ||
@@ -102,6 +103,7 @@ class Level {
       return `wall`;
     }
 
+    // Ширина препятсятвия? Это ведь не точка, иначе при ширине актора меньше 1 он падает в разъемы между точками.
     for (let i = 0; i < this.grid.length; i++) {
       for (let j = 0; j < this.grid[i].length; j++) {
         
@@ -290,3 +292,33 @@ class Player extends Actor {
   
   get type() { return this._type; }
 }
+
+const schemas = [
+  [
+    '         ',
+    '         ',
+    '    =    ',
+    '       o ',
+    '     !xxx',
+    ' @       ',
+    'xxx!     ',
+    '         '
+  ],
+  [
+    '      v  ',
+    '    v    ',
+    '  v      ',
+    '        o',
+    '        x',
+    '@   x    ',
+    'x        ',
+    '         '
+  ]
+];
+const actorDict = {
+  '@': Player,
+  'v': FireRain
+}
+const parser = new LevelParser(actorDict);
+runGame(schemas, parser, DOMDisplay)
+  .then(() => console.log('Вы выиграли приз!'));
