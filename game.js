@@ -108,7 +108,7 @@ class Level {
         
         if (j <= pos.x + size.x && 
             j + 1 >= pos.x && 
-            i >= pos.y && 
+            i + 1 >= pos.y && 
             i < pos.y + size.y) {
           switch (this.grid[i][j]) {
             case `wall`:
@@ -294,26 +294,101 @@ class Player extends Actor {
 
 const schemas = [
   [
-    '         ',
-    '         ',
-    '    =    ',
-    '       o ',
-    '     !xxx',
-    ' @       ',
-    'xxx!     ',
-    '         '
+    "     v                 ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "  |xxx       w         ",
+    "  o                 o  ",
+    "  x               = x  ",
+    "  x          o o    x  ",
+    "  x  @    *  xxxxx  x  ",
+    "  xxxxx             x  ",
+    "      x!!!!!!!!!!!!!x  ",
+    "      xxxxxxxxxxxxxxx  ",
+    "                       "
   ],
   [
-    '      v  ',
-    '    v    ',
-    '  v      ',
-    '        o',
-    '        x',
-    '@   x    ',
-    'x        ',
-    '         '
+    "     v                 ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "  |                    ",
+    "  o                 o  ",
+    "  x               = x  ",
+    "  x          o o    x  ",
+    "  x  @       xxxxx  x  ",
+    "  xxxxx             x  ",
+    "      x!!!!!!!!!!!!!x  ",
+    "      xxxxxxxxxxxxxxx  ",
+    "                       "
+  ],
+  [
+    "        |           |  ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "                       ",
+    "     |                 ",
+    "                       ",
+    "         =      |      ",
+    " @ |  o            o   ",
+    "xxxxxxxxx!!!!!!!xxxxxxx",
+    "                       "
+  ],
+  [
+    "                       ",
+    "                       ",
+    "                       ",
+    "    o                  ",
+    "    x      | x!!x=     ",
+    "         x             ",
+    "                      x",
+    "                       ",
+    "                       ",
+    "                       ",
+    "               xxx     ",
+    "                       ",
+    "                       ",
+    "       xxx  |          ",
+    "                       ",
+    " @                     ",
+    "xxx                    ",
+    "                       "
+  ], [
+    "   v         v",
+    "              ",
+    "         !o!  ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "         xxx  ",
+    "          o   ",
+    "        =     ",
+    "  @           ",
+    "  xxxx        ",
+    "  |           ",
+    "      xxx    x",
+    "              ",
+    "          !   ",
+    "              ",
+    "              ",
+    " o       x    ",
+    " x      x     ",
+    "       x      ",
+    "      x       ",
+    "   xx         ",
+    "              "
   ]
-];
+]
+;
 const actorDict = {
   '@': Player,
   'v': FireRain,
