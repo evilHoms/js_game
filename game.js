@@ -93,8 +93,7 @@ class Level {
     
   obstacleAt(pos, size) {
     if (!(pos instanceof Vector) || !(size instanceof Vector)) throw new Error(`Wrong argument in obstacleAt method`);
-console.log(`player.pos`, pos.x, pos.y);
-    console.log(this.grid);
+
     if (pos.x + size.x > this.width ||
        pos.x < 0 ||
        pos.y + size.y > this.height ||
@@ -108,9 +107,9 @@ console.log(`player.pos`, pos.x, pos.y);
       for (let j = 0; j < this.grid[i].length; j++) {
         
         if (j <= pos.x + size.x && 
-            j >= pos.x && 
+            j + 1 >= pos.x && 
             i >= pos.y && 
-            i <= pos.y + size.y) {
+            i < pos.y + size.y) {
           switch (this.grid[i][j]) {
             case `wall`:
               return `wall`;
@@ -317,7 +316,9 @@ const schemas = [
 ];
 const actorDict = {
   '@': Player,
-  'v': FireRain
+  'v': FireRain,
+  'o': Coin,
+  '=': HorizontalFireball
 }
 const parser = new LevelParser(actorDict);
 runGame(schemas, parser, DOMDisplay)
