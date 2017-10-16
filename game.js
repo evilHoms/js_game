@@ -30,6 +30,8 @@ class Actor {
     this.speed = new Vector(speed.x, speed.y);
     
     this._type = `actor`;
+    
+    //console.log(this.pos.x, pos.x, this.pos.y, pos.y);
   }
   
   get left() { return this.pos.x; }
@@ -91,10 +93,7 @@ class Level {
     
   obstacleAt(pos, size) {
     if (!(pos instanceof Vector) || !(size instanceof Vector)) throw new Error(`Wrong argument in obstacleAt method`);
-    
-    // Как проверить, пересечение с препятсятвиями, если нет данных об этих препятствиях?
-    // Или препятствия так же передаются в массив this.actors?
-    
+
     if (pos.x + size.x > this.width ||
        pos.x < 0 ||
        pos.y + size.y > this.height ||
@@ -102,21 +101,25 @@ class Level {
       if (pos.y + size.y > this.height) return `lava`;
       return `wall`;
     }
-    
-    /*for (let i = pos.y; i <= pos.y + size.y; i++) {
-      for (let j = pos.x; j <= pos.x + size.x; j++) {
-        switch (this.grid[i][j]) {
-          case `x`:
-            console.log(`wall`);
-            return `wall`;
-          case `!`:
-            console.log(`lawa`);
-            return `lawa`;
-          default:
-            console.log(`its ok`);
+
+    for (let i = 0; i < this.grid.length; i++) {
+      for (let j = 0; j < this.grid[i].length; j++) {
+        
+        if (j <= pos.x + size.x && 
+            j >= pos.x && 
+            i >= pos.y && 
+            i <= pos.y + size.y) {
+          switch (this.grid[i][j]) {
+            case `wall`:
+              return `wall`;
+            case `lava`:
+              return `lava`;
+          }
         }
+        
       }
-    }*/
+    }
+    
   }
   
   removeActor(actor) {
