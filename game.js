@@ -300,8 +300,6 @@ const actorDict = {
 }
 const parser = new LevelParser(actorDict);
 
-let schemas;
 loadLevels()
-  .then(res => schemas = JSON.parse(res))
-  .then(r => runGame(r, parser, DOMDisplay))
+  .then(r => runGame(JSON.parse(r), parser, DOMDisplay))
   .then(() => console.log('Вы выиграли приз!'));
