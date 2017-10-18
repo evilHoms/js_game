@@ -292,103 +292,6 @@ class Player extends Actor {
   get type() { return this._type; }
 }
 
-const schemas = [
-  [
-    "     v                 ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "  |xxx       w         ",
-    "  o                 o  ",
-    "  x               = x  ",
-    "  x          o o    x  ",
-    "  x  @    *  xxxxx  x  ",
-    "  xxxxx             x  ",
-    "      x!!!!!!!!!!!!!x  ",
-    "      xxxxxxxxxxxxxxx  ",
-    "                       "
-  ],
-  [
-    "     v                 ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "  |                    ",
-    "  o                 o  ",
-    "  x               = x  ",
-    "  x          o o    x  ",
-    "  x  @       xxxxx  x  ",
-    "  xxxxx             x  ",
-    "      x!!!!!!!!!!!!!x  ",
-    "      xxxxxxxxxxxxxxx  ",
-    "                       "
-  ],
-  [
-    "        |           |  ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "                       ",
-    "     |                 ",
-    "                       ",
-    "         =      |      ",
-    " @ |  o            o   ",
-    "xxxxxxxxx!!!!!!!xxxxxxx",
-    "                       "
-  ],
-  [
-    "                       ",
-    "                       ",
-    "                       ",
-    "    o                  ",
-    "    x      | x!!x=     ",
-    "         x             ",
-    "                      x",
-    "                       ",
-    "                       ",
-    "                       ",
-    "               xxx     ",
-    "                       ",
-    "                       ",
-    "       xxx  |          ",
-    "                       ",
-    " @                     ",
-    "xxx                    ",
-    "                       "
-  ], [
-    "   v         v",
-    "              ",
-    "         !o!  ",
-    "              ",
-    "              ",
-    "              ",
-    "              ",
-    "         xxx  ",
-    "          o   ",
-    "        =     ",
-    "  @           ",
-    "  xxxx        ",
-    "  |           ",
-    "      xxx    x",
-    "              ",
-    "          !   ",
-    "              ",
-    "              ",
-    " o       x    ",
-    " x      x     ",
-    "       x      ",
-    "      x       ",
-    "   xx         ",
-    "              "
-  ]
-]
-;
 const actorDict = {
   '@': Player,
   'v': FireRain,
@@ -396,5 +299,9 @@ const actorDict = {
   '=': HorizontalFireball
 }
 const parser = new LevelParser(actorDict);
-runGame(schemas, parser, DOMDisplay)
+
+let schemas;
+loadLevels()
+  .then(res => schemas = JSON.parse(res))
+  .then(r => runGame(r, parser, DOMDisplay))
   .then(() => console.log('Вы выиграли приз!'));
