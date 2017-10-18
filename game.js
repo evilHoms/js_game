@@ -106,9 +106,9 @@ class Level {
     for (let i = 0; i < this.grid.length; i++) {
       for (let j = 0; j < this.grid[i].length; j++) {
         
-        if (j <= pos.x + size.x && 
-            j + 1 >= pos.x && 
-            i + 1 >= pos.y && 
+        if (j < pos.x + size.x && 
+            j + 1 > pos.x && 
+            i + 1 > pos.y && 
             i < pos.y + size.y) {
           switch (this.grid[i][j]) {
             case `wall`:
