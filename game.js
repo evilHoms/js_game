@@ -25,9 +25,9 @@ class Actor {
   constructor(pos = new Vector(0, 0), size = new Vector(1, 1), speed = new Vector(0, 0)) {
     if (!(pos instanceof Vector) || !(size instanceof Vector) || !(speed instanceof Vector)) throw new Error(`Wrong type argument in Actor constructor`);
     
-    this.pos = new Vector(pos.x, pos.y);
-    this.size = new Vector(size.x, size.y);
-    this.speed = new Vector(speed.x, speed.y);
+    this.pos = pos;
+    this.size = size;
+    this.speed = speed;
     
     this._type = `actor`;
     
