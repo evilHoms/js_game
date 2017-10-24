@@ -208,8 +208,8 @@ class Fireball extends Actor {
   
   get type() { return this._type; }
   
-  getNextPosition(t = 1) {
-    return new Vector(this.pos.x + this.speed.x * t, this.pos.y + this.speed.y * t);
+  getNextPosition(time = 1) {
+    return new Vector(this.pos.x + this.speed.x * time, this.pos.y + this.speed.y * time);
   }
   
   handleObstacle() {
@@ -217,8 +217,8 @@ class Fireball extends Actor {
     this.speed.y = -this.speed.y;
   }
   
-  act(t, level) {
-    const newPos = this.getNextPosition(t);
+  act(time, level) {
+    const newPos = this.getNextPosition(time);
     if (level.obstacleAt(newPos, this.size))
       this.handleObstacle();
     else
@@ -264,21 +264,21 @@ class Coin extends Actor {
   
   get type() { return this._type; }
   
-  updateSpring(t = 1) {
-    this.spring += t * this.springSpeed;
+  updateSpring(time = 1) {
+    this.spring += time * this.springSpeed;
   }
   
   getSpringVector() {
     return new Vector(0, this.springDist * Math.sin(this.spring));
   }
   
-  getNextPosition(t = 1) {
-    this.updateSpring(t);
+  getNextPosition(time = 1) {
+    this.updateSpring(time);
     return new Vector(this.basePos.x, this.basePos.y + this.getSpringVector().y);
   }
   
-  act(t = 1) {
-    this.pos = this.getNextPosition(t);
+  act(time = 1) {
+    this.pos = this.getNextPosition(time);
   }
 }
 
