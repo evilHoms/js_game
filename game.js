@@ -209,12 +209,11 @@ class Fireball extends Actor {
   get type() { return this._type; }
   
   getNextPosition(time = 1) {
-    return new Vector(this.pos.x + this.speed.x * time, this.pos.y + this.speed.y * time);
+    return this.pos.plus(this.speed.times(time));
   }
   
   handleObstacle() {
-    this.speed.x = -this.speed.x;
-    this.speed.y = -this.speed.y;
+    this.speed = this.speed.times(-1);
   }
   
   act(time, level) {
@@ -246,8 +245,7 @@ class FireRain extends Fireball {
   }
   
   handleObstacle() {
-    this.pos.y = this.startPos.y;
-    this.pos.x = this.startPos.x;
+    this.pos = this.startPos;
   }
 }
 
